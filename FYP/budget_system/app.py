@@ -169,6 +169,9 @@ def home_admin():
     return render_template('home_admin.html')
 
 @app.route('/')
+def index():
+    return redirect(url_for('login'))
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
