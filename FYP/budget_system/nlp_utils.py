@@ -384,8 +384,11 @@ def detect_transaction_type(text: str) -> str:
         return "expense"
 
     # If "give/gave" + target person → EXPENSE
-    if re.search(r"\b(giv(?:e|en|ing)|gave)\b\s+(my|parent|parents|mum|mom|dad|friend|bro|sis|brother|sister)\b", txt):
-        return "expense"
+# Someone else gave (no "I") → INCOME
+    if re.search(r"\b(dad|mom|mum|parent|parents|friend|bro|sis|brother|sister)\b.*\b(giv(?:e|en|ing)|gave)\b", txt) \
+    and not re.search(r"\bi\b", txt):
+        return "income"
+
     
     if any(word in txt for word in ["spent", "spend"]):
         return "expense"
