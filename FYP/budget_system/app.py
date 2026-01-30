@@ -541,4 +541,4 @@ def charts():
 if __name__ == '__main__':
     # if os.environ.get("WERKZEUG_RUN_MAIN") == "true":
     #     webbrowser.open_new("http://127.0.0.1:5000/")
-    app.run(debug=True)
+    app.run()
