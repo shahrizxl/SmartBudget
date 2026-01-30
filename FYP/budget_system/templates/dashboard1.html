@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<section class="dashboard-header">
+    <h2>Financial Dashboard</h2>
+    <p class="subtitle">
+        Intelligent insights into your income, expenses, and predictions.
+    </p>
+</section>
+
+{% if prediction_message %}
+<div class="card info-card">
+    {{ prediction_message }}
+</div>
+{% endif %}
+
+<!-- SUMMARY -->
+<div class="grid three">
+    <div class="card stat-card">
+        <span>Total Income</span>
+        <h3>RM {{ total_income }}</h3>
+    </div>
+
+    <div class="card stat-card">
+        <span>Total Expense</span>
+        <h3>RM {{ total_expense }}</h3>
+    </div>
+
+    <div class="card stat-card">
+        <span>Tomorrow</span>
+        <h3>RM {{ next_day }}</h3>
+    </div>
+
+    <div class="card stat-card">
+        <span>Next 7 Days</span>
+        <h3>RM {{ next_week }}</h3>
+    </div>
+
+    <div class="card stat-card">
+        <span>Next 30 Days</span>
+        <h3>RM {{ next_month }}</h3>
+    </div>
+</div>
+
+<!-- MODEL COMPARISON -->
+<div class="card">
+    <h3>ML Model Comparison</h3>
+
+    {% if model_results %}
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>MAE</th>
+                    <th>RMSE</th>
+                    <th>R²</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for m in model_results %}
+                <tr>
+                    <td>{{ m.model }}</td>
+                    <td>{{ m.mae }}</td>
+                    <td>{{ m.rmse }}</td>
+                    <td>{{ m.r2 }}</td>
+                    <td>
+                        {% if m.accepted %}
+                            <span class="pill success">Accepted</span>
+                        {% else %}
+                            <span class="pill danger">Rejected</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p class="empty">No ML model results available.</p>
+    {% endif %}
+</div>
+
+<!-- TRANSACTIONS -->
+<div class="card">
+    <h3>Transactions</h3>
+
+    {% if transactions %}
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Amount (RM)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in transactions %}
+                <tr>
+                    <td>{{ t.date or t.created_at }}</td>
+                    <td>{{ t.description or '-' }}</td>
+                    <td>{{ t.type }}</td>
+                    <td>{{ t.amount }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p class="empty">No transactions found.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

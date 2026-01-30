@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Add Transaction{% endblock %}
+
+{% block content %}
+
+<section class="page-header pixel-ui">
+    <h2>Add Transaction</h2>
+    <p class="subtitle">
+        Enter your transaction naturally. We’ll handle the rest.
+    </p>
+</section>
+
+<div class="card pixel-ui">
+
+    <form method="POST" class="smart-input">
+        <textarea
+            name="message"
+            placeholder="Bought lunch RM12 and coffee RM5"
+            required
+        ></textarea>
+
+        <button type="submit" class="action-link danger">
+            Add Transaction
+        </button>
+    </form>
+
+</div>
+
+<div class="card pixel-ui examples-card">
+    <h3>Examples</h3>
+    <ul class="examples-list">
+        <li>Bought lunch RM12 and coffee RM5</li>
+        <li>Received salary RM1200</li>
+        <li>Paid parking RM2.50 and toll RM3</li>
+    </ul>
+</div>
+
+<a href="{{ url_for('add_manual') }}" class="action-link edit-link">Add Manual</a>
+
+
+{% endblock %}

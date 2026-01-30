@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Predictions{% endblock %}
+
+{% block content %}
+
+<!-- PAGE HEADER (PIXEL) -->
+<section class="page-header pixel-ui">
+    <h2>Expense Predictions</h2>
+    <p class="subtitle">
+        Forecasted spending based on your historical expense patterns.
+    </p>
+</section>
+
+<!-- HERO PREDICTION (PIXEL HEADERS + NUMBERS) -->
+<div class="prediction-hero card pixel-ui">
+    <div class="hero-text">
+        <h3>Baseline Forecast</h3>
+        <p class="hint">
+            {{ simple[0] if simple and simple|length > 0 else "No forecast available." }}
+        </p>
+    </div>
+
+    <div class="grid three hero-grid">
+        <div class="forecast">
+            <span>Tomorrow</span>
+            <strong>
+                RM {{ "%.2f"|format(simple[1]) if simple and simple|length > 1 else "0.00" }}
+            </strong>
+        </div>
+
+        <div class="forecast">
+            <span>Next 7 Days</span>
+            <strong>
+                RM {{ "%.2f"|format(simple[2]) if simple and simple|length > 2 else "0.00" }}
+            </strong>
+        </div>
+
+        <div class="forecast">
+            <span>Next 30 Days</span>
+            <strong>
+                RM {{ "%.2f"|format(simple[3]) if simple and simple|length > 3 else "0.00" }}
+            </strong>
+        </div>
+    </div>
+</div>
+
+<!-- ADVANCED MODELS (SYSTEM FONT FOR DATA) -->
+<div class="card advanced-card">
+    <div class="card-header">
+        <h3>Advanced Models</h3>
+        <span class="tag">ML Evaluation</span>
+    </div>
+
+    <p class="hint">
+        {{ advanced[0] if advanced and advanced|length > 0 else "No advanced evaluation available." }}
+    </p>
+
+    {% if advanced and advanced|length > 4 and advanced[4] %}
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th class="center">Model</th>
+                    <th class="center">MAE</th>
+                    <th class="center">RMSE</th>
+                    <th class="center">R²</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for m in advanced[4] %}
+                <tr>
+                    <td class="center">{{ m.model }}</td>
+                    <td class="center">{{ "%.4f"|format(m.mae) }}</td>
+                    <td class="center">{{ "%.4f"|format(m.rmse) }}</td>
+                    <td class="center">{{ "%.3f"|format(m.r2) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p class="empty">No model metrics available.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

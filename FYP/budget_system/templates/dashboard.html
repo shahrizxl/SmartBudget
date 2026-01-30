@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<section class="dashboard-header">
+    <h2>SmartChat Budget</h2>
+    <p class="subtitle">
+        Your financial overview, powered by intelligent insights.
+    </p>
+</section>
+
+<!-- QUICK INPUT -->
+<div class="card">
+    <h3>Add Transaction</h3>
+    <form method="POST" action="{{ url_for('dashboard') }}">
+        <textarea
+            name="message"
+            placeholder="Bought lunch RM12 and coffee RM5"
+            required></textarea>
+
+        <button type="submit">Analyze & Save</button>
+    </form>
+</div>
+
+<!-- SUMMARY -->
+<div class="grid two">
+    <div class="card stat-card">
+        <span>Total Income</span>
+        <h3>RM {{ total_income }}</h3>
+    </div>
+
+    <div class="card stat-card">
+        <span>Total Expense</span>
+        <h3>RM {{ total_expense }}</h3>
+    </div>
+</div>
+
+<!-- PREDICTIONS -->
+<div class="card">
+    <h3>Future Spending Prediction</h3>
+    <p class="hint">
+        Powered by Random Forest Regressor<br>
+        <small>Model status: {{ prediction_message }}</small>
+    </p>
+
+    {% if metrics %}
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Value</th>
+                    <th>Interpretation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>MAE</td>
+                    <td>{{ metrics.mae }}</td>
+                    <td>Average absolute error (RM). Lower is better.</td>
+                </tr>
+                <tr>
+                    <td>MSE</td>
+                    <td>{{ metrics.mse }}</td>
+                    <td>Penalizes large errors more heavily.</td>
+                </tr>
+                <tr>
+                    <td>R²</td>
+                    <td>{{ metrics.r2 }}</td>
+                    <td>Variance explained by the model.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</div>
+
+<!-- FORECAST -->
+<div class="card">
+    <h3>Predicted Expenses</h3>
+
+    <div class="grid three">
+        <div class="forecast">
+            <span>Next Day</span>
+            <strong>RM {{ next_day }}</strong>
+        </div>
+        <div class="forecast">
+            <span>Next 7 Days</span>
+            <strong>RM {{ next_week }}</strong>
+        </div>
+        <div class="forecast">
+            <span>Next 30 Days</span>
+            <strong>RM {{ next_month }}</strong>
+        </div>
+    </div>
+</div>
+
+<!-- TRANSACTIONS -->
+<div class="card">
+    <h3>Recent Transactions</h3>
+
+    {% if transactions %}
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Amount (RM)</th>
+                    <th>Category</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in transactions %}
+                <tr>
+                    <td>{{ t.created_at | datetimeformat('%Y-%m-%d') }}</td>
+                    <td>{{ t.description }}</td>
+                    <td>{{ t.type }}</td>
+                    <td>{{ t.amount }}</td>
+                    <td>{{ t.category }}</td>
+                    <td>
+                        <form method="POST"
+                              action="{{ url_for('delete_transaction', transaction_id=t.id) }}">
+                            <button class="danger"
+                                    onclick="return confirm('Delete this transaction?')">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p class="empty">No transactions yet.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

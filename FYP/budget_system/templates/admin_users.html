@@ -1,0 +1,60 @@
+{% extends "base_admin.html" %}
+
+{% block title %}Admin - User Management{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+
+    <div class="admin-header">
+        <h1>User Management</h1>
+    </div>
+
+    {% if users %}
+    <div class="table-wrapper">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th class="center">#</th>
+                    <th class="center">Email</th>
+                    <th class="center">Status</th>
+                    <th class="center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td class="center">{{ loop.index }}</td>
+                    <td class="center">{{ user.email }}</td>
+                    <td class="center">
+                        {% if user.is_active %}
+                            <span class="status active">Active</span>
+                        {% else %}
+                            <span class="status inactive">Inactive</span>
+                        {% endif %}
+                    </td>
+                    <td class="center">
+                        <form method="post" action="{{ url_for('toggle_user', user_id=user.id) }}">
+                            <button type="submit" class="action-link danger">
+                                {{ "Deactivate" if user.is_active else "Activate" }}
+                            </button>
+                        </form>
+
+                        <form method="post"
+                              action="{{ url_for('delete_user', user_id=user.id) }}"
+                              onsubmit="return confirm('Are you sure you want to delete this user?');">
+                            <button type="submit" class="action-link danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p>No users found.</p>
+    {% endif %}
+
+</div>
+        <a href="{{ url_for('home_admin') }}" class="action-link edit-link">Back</a>
+
+{% endblock %}

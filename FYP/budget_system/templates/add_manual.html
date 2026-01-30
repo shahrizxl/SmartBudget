@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Add Transaction{% endblock %}
+
+{% block content %}
+<section class="page-header pixel-ui">
+    <h2>Add Transaction</h2>
+    <p class="subtitle">Enter a transaction manually</p>
+</section>
+
+<div class="card edit-card">
+    {% if error %}
+        <p class="hint" style="color:#991b1b;">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST" class="edit-form">
+
+        <div class="form-row">
+            <label>Description </label>
+            <input type="text" name="description" required>
+        </div>
+
+        <div class="form-row">
+            <label>Amount </label>
+            <input type="number" name="amount" step="0.01" required>
+        </div>
+
+        <div class="form-row">
+            <label>Type </label>
+            <select name="type" required>
+                <option value="">Select</option>
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
+            </select>
+        </div>
+
+        <div class="form-row">
+            <label>Category</label>
+            <input type="text" name="category" placeholder="Food, Rent, Salary...">
+        </div>
+
+        <div class="form-row">
+            <label>Date</label>
+            <input type="date" name="date">
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="action-link danger">Save</button>
+            <a href="{{ url_for('home') }}" class="action-link edit-link">Cancel</a>
+        </div>
+
+    </form>
+</div>
+{% endblock %}

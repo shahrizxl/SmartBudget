@@ -1,0 +1,738 @@
+/* =========================
+   RESET & BASE
+========================= */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    color: #000;
+    line-height: 1.6;
+    background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(0,0,0,0.04), transparent 60%),
+        radial-gradient(900px 500px at 90% 10%, rgba(0,0,0,0.03), transparent 55%),
+        #f7f7f7;
+}
+
+/* =========================
+   APP LAYOUT
+========================= */
+.app {
+    padding: 72px 80px;
+    background: transparent;
+}
+
+.app-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 48px 56px 56px;
+    border: 1.5px solid rgba(0,0,0,0.2);
+    box-shadow:
+        0 30px 80px rgba(0,0,0,0.08),
+        0 2px 0 rgba(0,0,0,0.04);
+    min-height: calc(100vh - 180px);
+}
+
+/* =========================
+   NAVBAR
+========================= */
+.top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(16px);
+    border-bottom: 1.5px solid rgba(0,0,0,0.2);
+}
+
+.nav-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 16px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* =========================
+   NAV LINKS
+========================= */
+.nav-links a {
+    margin-left: 28px;
+    text-decoration: none;
+    font-size: 14px;
+    color: #000;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 0;
+    height: 2px;
+    background: rgba(0,0,0,0.7);
+    transition: width 0.25s ease;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    width: 100%;
+}
+
+/* =========================
+   HEADERS
+========================= */
+.page-header {
+    max-width: 1300px;
+    margin-bottom: 36px;
+}
+
+h2 {
+    font-size: 30px;
+    margin-bottom: 6px;
+}
+
+h3 {
+    font-size: 20px;
+    margin: 0;
+}
+
+.subtitle {
+    font-size: 15px;
+    color: #666;
+}
+
+/* =========================
+   GRID
+========================= */
+.grid {
+    display: grid;
+    gap: 24px;
+    margin: 24px 0;
+    align-items: stretch;
+}
+
+.grid.three {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+/* =========================
+   CARDS
+========================= */
+.card {
+    background: #ffffff;
+    border: 3px solid rgba(0,0,0,0.25);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.06);
+    transition: border-color 0.25s ease;
+    margin-bottom: 24px;
+}
+
+.logo.pixel-ui.logo-plain {
+    text-decoration: none;
+}
+
+.card:hover {
+    border-color: rgba(0,0,0,0.45);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+/* =========================
+   FORECAST
+========================= */
+.forecast {
+    padding: 26px;
+    border: 3px solid rgba(0,0,0,0.25);
+    border-radius: 16px;
+    background: #fff;
+    text-align: center;
+}
+
+.forecast span {
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: #777;
+}
+
+.forecast strong {
+    display: block;
+    margin-top: 6px;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+/* =========================
+   TABLES
+========================= */
+.table-wrapper {
+    overflow-x: auto;
+    margin-top: 16px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead th {
+    font-size: 16px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #777;
+    padding-bottom: 12px;
+}
+
+th,
+td {
+    padding: 10px 14px;
+    font-size: 16px;
+    border-bottom: 3px solid rgba(0,0,0,0.15);
+}
+
+.center {
+    text-align: center;
+}
+
+
+
+
+/* =========================
+   SMART INPUT (SHARED)
+========================= */
+.smart-input {
+    position: relative;
+}
+
+.smart-input textarea,
+input,
+select {
+    border: 3px solid rgba(0,0,0,0.25);
+    border-radius: 16px;
+}
+
+.smart-input textarea:focus,
+input:focus,
+select:focus {
+    border-color: rgba(0,0,0,0.6);
+    box-shadow: 0 0 0 4px rgba(0,0,0,0.08);
+    outline: none;
+}
+
+/* =========================
+   PIXEL UI
+========================= */
+.pixel-ui {
+    font-family: "Press Start 2P", monospace;
+}
+
+.pixel-ui h2,
+.pixel-ui h3 {
+    font-size: 18px;
+    letter-spacing: 0.04em;
+}
+
+.pixel-ui textarea {
+    font-family: "Press Start 2P", monospace;
+    font-size: 16px;
+}
+
+/* =========================
+   ACTION LINKS (EDIT / DELETE)
+========================= */
+.edit-link,
+.action-link {
+    margin-right: 12px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+
+    text-decoration: none;
+    color: #000;
+    font-weight: 500;
+    font-family: inherit;
+
+    position: relative;
+    display: inline-block;
+}
+
+.edit-link::after,
+.action-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 2px;
+    background: rgba(0,0,0,0.7);
+    transition: width 0.25s ease;
+}
+
+.edit-link:hover::after,
+.action-link:hover::after {
+    width: 100%;
+}
+
+/* =========================
+   CHARTS
+========================= */
+.chart-card {
+    border: 3px solid rgba(0,0,0,0.25);
+    height: 340px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-card.large {
+    height: 360px;
+   
+}
+
+.chart-card canvas {
+    flex: 1;
+    min-height: 0;
+    width: 100% !important;
+    height: 100% !important;
+   
+}
+
+/* =========================
+   HOME
+========================= */
+.home-hero {
+    padding: 96px 24px 88px;
+    text-align: center;
+    border-radius: 28px;
+    background:
+        radial-gradient(900px 420px at 50% -20%, rgba(0,0,0,0.05), transparent 60%),
+        #ffffff;
+    border: 1.5px solid rgba(0,0,0,0.2);
+    box-shadow:
+        0 30px 80px rgba(0,0,0,0.08),
+        0 2px 0 rgba(0,0,0,0.04);
+    margin-bottom: 72px;
+}
+
+
+
+/* =========================
+   BASE INPUTS (RESTORED)
+========================= */
+.smart-input textarea {
+    width: 100%;
+    min-height: 140px;
+    padding: 20px 160px 20px 20px;
+    font-family: "Press Start 2P", monospace;
+}
+
+/* =========================
+   RESET & BASE
+========================= */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    color: #000;
+    line-height: 1.6;
+    background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(0,0,0,0.04), transparent 60%),
+        radial-gradient(900px 500px at 90% 10%, rgba(0,0,0,0.03), transparent 55%),
+        #f7f7f7;
+}
+
+/* =========================
+   APP LAYOUT
+========================= */
+.app {
+    padding: 72px 80px;
+}
+
+.app-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 56px;
+    border: 1.5px solid rgba(0,0,0,0.2);
+    box-shadow:
+        0 30px 80px rgba(0,0,0,0.08),
+        0 2px 0 rgba(0,0,0,0.04);
+}
+
+/* =========================
+   NAVBAR
+========================= */
+.top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(16px);
+    border-bottom: 1.5px solid rgba(0,0,0,0.2);
+}
+
+.nav-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 16px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* =========================
+   NAV LINKS
+========================= */
+.nav-links a {
+    margin-left: 28px;
+    text-decoration: none;
+    font-size: 16px;
+    color: #000;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 0;
+    height: 2px;
+    background: rgba(0,0,0,0.7);
+    transition: width 0.25s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* =========================
+   PIXEL UI
+========================= */
+.pixel-ui {
+    font-family: "Press Start 2P", monospace;
+}
+
+/* =========================
+   HOME HERO
+========================= */
+.home-hero {
+    padding: 96px 24px 88px;
+    text-align: center;
+    border-radius: 28px;
+    background:
+        radial-gradient(900px 420px at 50% -20%, rgba(0,0,0,0.05), transparent 60%),
+        #ffffff;
+    border: 1.5px solid rgba(0,0,0,0.2);
+    box-shadow:
+        0 30px 80px rgba(0,0,0,0.08),
+        0 2px 0 rgba(0,0,0,0.04);
+    margin-bottom: 64px;
+}
+
+.home-eyebrow {
+    display: inline-block;
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    margin-bottom: 18px;
+    opacity: 0.6;
+}
+
+.home-title {
+    font-size: 28px;
+    letter-spacing: 0.08em;
+    margin-bottom: 18px;
+}
+
+.home-subtitle {
+    max-width: 520px;
+    margin: 0 auto 40px;
+    font-size: 16px;
+    color: #6b7280;
+}
+
+/* =========================
+   HERO ACTIONS
+========================= */
+.home-actions {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.home-btn {
+    min-width: 180px;
+    padding: 14px 26px;
+    border-radius: 999px;
+    font-size: 16px;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    text-align: center;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.home-btn.primary {
+    background: #000;
+    color: #fff;
+    border: 1.5px solid #000;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+.home-btn.primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 36px rgba(0,0,0,0.3);
+}
+
+.home-btn.ghost {
+    background: transparent;
+    color: #000;
+    border: 1.5px solid rgba(0,0,0,0.3);
+}
+
+.home-btn.ghost:hover {
+    background: rgba(0,0,0,0.04);
+    transform: translateY(-3px);
+}
+
+
+
+/* =========================
+   WHY SMARTBUDGET
+========================= */
+.section-title {
+    text-align: center;
+    font-size: 18px;
+    letter-spacing: 0.06em;
+    margin-bottom: 36px;
+}
+
+.why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 28px;
+}
+
+.why-card {
+    padding: 28px;
+    border-radius: 18px;
+    border: 1.5px solid rgba(0,0,0,0.2);
+    background: #fafafa;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.why-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(0,0,0,0.4);
+    box-shadow: 0 16px 36px rgba(0,0,0,0.08);
+}
+
+.why-card h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.why-card p {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* =========================
+   AUTH PAGES
+========================= */
+
+.auth-wrapper {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+/* Small label on top */
+.auth-eyebrow {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: #888;
+    margin-bottom: 1rem;
+}
+
+/* Headline */
+.auth-title {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Subtitle */
+.auth-subtitle {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+/* Inputs */
+.auth-form .input-group {
+    margin-bottom: 1rem;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 0.9rem;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-form input:focus {
+    outline: none;
+    border-color: #5b7cfa;
+    box-shadow: 0 0 0 3px rgba(91,124,250,0.15);
+}
+
+/* Button */
+.auth-btn {
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.9rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    border: none;
+}
+
+.auth-btn.primary {
+    background: #5b7cfa;
+    color: white;
+}
+
+.auth-btn.primary:hover {
+    background: #4a69e2;
+}
+
+/* Messages */
+.auth-message {
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.auth-message.error {
+    background: #ffe6e6;
+    color: #c0392b;
+}
+
+.auth-message.success {
+    background: #e8fff1;
+    color: #2ecc71;
+}
+
+/* Footer */
+.auth-footer {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.auth-footer a {
+    color: #5b7cfa;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* =========================
+   FORM ROW (MANUAL ENTRY)
+========================= */
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 18px;
+}
+
+/* Label */
+.form-row label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #555;
+}
+
+/* Inputs & selects */
+.form-row input,
+.form-row select {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    background: #fafafa;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+/* Focus state */
+.form-row input:focus,
+.form-row select:focus {
+    outline: none;
+    border-color: #000;
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(0,0,0,0.08);
+}
+
+/* Placeholder */
+.form-row input::placeholder {
+    color: #aaa;
+}
+
+/* Date input fix */
+.form-row input[type="date"] {
+    padding-right: 10px;
+}

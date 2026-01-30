@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% block title %}Charts{% endblock %}
+
+{% block content %}
+
+<!-- PAGE HEADER -->
+<section class="page-header pixel-ui">
+    <h2>Spending Insights</h2>
+    <p class="subtitle">
+        Visual analysis of your income and expenses.
+    </p>
+</section>
+
+<!-- TOP ROW -->
+<div class="grid three">
+
+    <div class="card chart-card">
+        <h3 class="pixel-title">Monthly Expense Trend</h3>
+        <canvas id="expenseTrend"></canvas>
+    </div>
+
+    <div class="card chart-card">
+        <h3 class="pixel-title">Income vs Expense</h3>
+        <canvas id="incomeExpense"></canvas>
+    </div>
+
+    <div class="card chart-card">
+        <h3 class="pixel-title">Category Breakdown</h3>
+        <canvas id="categoryChart"></canvas>
+    </div>
+
+</div>
+
+<!-- BOTTOM ROW -->
+<div class="card chart-card large">
+    <h3 class="pixel-title">Balance Over Time</h3>
+    <canvas id="balanceChart"></canvas>
+</div>
+
+<!-- =========================
+     SAFE DATA BRIDGE
+========================= -->
+<script id="chart-data" type="application/json">
+{{ chart_data | tojson }}
+</script>
+
+<!-- =========================
+     CHART LOGIC
+========================= -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const chartData = JSON.parse(
+        document.getElementById("chart-data").textContent
+    );
+
+    if (typeof Chart === "undefined") {
+        console.error("Chart.js not loaded");
+        return;
+    }
+
+    // MONTHLY EXPENSE TREND
+    if (chartData.expense_trend.labels.length) {
+        new Chart(document.getElementById("expenseTrend"), {
+            type: "line",
+            data: {
+                labels: chartData.expense_trend.labels,
+                datasets: [{
+                    data: chartData.expense_trend.values,
+                    borderWidth: 2,
+                    tension: 0.35,
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } }
+            }
+        });
+    }
+
+    // INCOME VS EXPENSE
+    if (chartData.income_expense.labels.length) {
+        new Chart(document.getElementById("incomeExpense"), {
+            type: "bar",
+            data: {
+                labels: chartData.income_expense.labels,
+                datasets: [
+                    {
+                        label: "Income",
+                        data: chartData.income_expense.income,
+                        backgroundColor: "#000"
+                    },
+                    {
+                        label: "Expense",
+                        data: chartData.income_expense.expense,
+                        backgroundColor: "#e5e5e5"
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: "top",
+                        labels: { boxWidth: 10 }
+                    }
+                }
+            }
+        });
+    }
+
+    // CATEGORY BREAKDOWN
+    if (chartData.category.labels.length) {
+        new Chart(document.getElementById("categoryChart"), {
+            type: "doughnut",
+            data: {
+                labels: chartData.category.labels,
+                datasets: [{
+                    data: chartData.category.values
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: "top",
+                        labels: { boxWidth: 10 }
+                    }
+                }
+            }
+        });
+    }
+
+    // BALANCE OVER TIME
+    if (chartData.balance.labels.length) {
+        new Chart(document.getElementById("balanceChart"), {
+            type: "line",
+            data: {
+                labels: chartData.balance.labels,
+                datasets: [{
+                    data: chartData.balance.values,
+                    borderWidth: 2,
+                    tension: 0.35,
+                    pointRadius: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: "top",
+                        labels: { boxWidth: 10 }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            autoSkip: true,
+                            maxTicksLimit: 10,
+                            maxRotation: 45
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+});
+</script>
+
+{% endblock %}

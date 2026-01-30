@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Transactions{% endblock %}
+
+{% block content %}
+
+<section class="page-header pixel-ui">
+    <h2>Your Transactions</h2>
+    <p class="subtitle">
+        A complete history of your recorded income and expenses.
+    </p>
+</section>
+
+<div class="card pixel-ui">
+
+    {% if transactions %}
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th class="center">Date</th>
+                    <th>Description</th>
+                    <th class="center">Type</th>
+                    <th class="center">Amount (RM)</th>
+                    <th class="center">Category</th>
+                    <th class="center"></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for t in transactions %}
+                <tr>
+                    <td class="center">
+                        {{ t.created_at | datetimeformat }}
+                    </td>
+
+                    <td class="description" title="{{ t.description }}">
+                        {{ t.description }}
+                    </td>
+
+                    <td class="center">
+                        <span class="type-pill {{ 'income' if t.type == 'income' else 'expense' }}">
+                            {{ t.type }}
+                        </span>
+                    </td>
+
+                    <td class="center amount {{ 'income' if t.type == 'income' else 'expense' }}">
+                        RM {{ "%.2f"|format(t.amount) }}
+                    </td>
+
+                    <td class="center">
+                        {{ t.category or "-" }}
+                    </td>
+
+                <td class="center">
+                    <a href="/edit/{{ t.id }}" class="action-link edit-link">Edit</a>
+
+                    <form action="/delete/{{ t.id }}" method="POST"
+                        onsubmit="return confirm('Delete this transaction?')"
+                        style="display:inline;">
+                        <button type="submit" class="action-link danger">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p class="empty">No transactions found.</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

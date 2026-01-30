@@ -1,0 +1,70 @@
+{% extends "base_admin.html" %}
+{% block title %}Home | Smartbudget{% endblock %}
+
+{% block content %}
+<main class="app">
+    <div class="app-inner">
+
+        <!-- =========================
+             HERO
+        ========================= -->
+        <section class="home-hero">
+            <span class="home-eyebrow pixel-ui">SMARTBUDGET</span>
+
+            <h1 class="home-title pixel-ui">
+                Take control of your money
+            </h1>
+
+            <p class="home-subtitle">
+                Budgeting isn’t about restriction.
+                It’s about clarity, confidence, and freedom.
+            </p>
+
+            <div class="home-actions">
+                {% if session.get('user') %}
+                    <a href="{{ url_for('admin_users') }}" class="home-btn primary">
+                        Manage Users
+                    </a>
+
+                {% else %}
+
+                    <a href="{{ url_for('login') }}" class="home-btn ghost">
+                        Login
+                    </a>
+                {% endif %}
+            </div>
+        </section>
+
+
+        <!-- =========================
+             WHY SMARTBUDGET
+        ========================= -->
+        <section class="why-budget">
+            <h2 class="section-title pixel-ui">Why Smartbudget?</h2>
+
+            <div class="why-grid">
+                <div class="why-card">
+                    <h3>Awareness</h3>
+                    <p>See where your money goes before it disappears.</p>
+                </div>
+
+                <div class="why-card">
+                    <h3>Confidence</h3>
+                    <p>Spend knowing you’re in control, not guessing.</p>
+                </div>
+
+                <div class="why-card">
+                    <h3>Planning</h3>
+                    <p>Prepare for what’s coming instead of reacting.</p>
+                </div>
+
+                <div class="why-card">
+                    <h3>Habits</h3>
+                    <p>Turn small actions into long-term discipline.</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</main>
+{% endblock %}

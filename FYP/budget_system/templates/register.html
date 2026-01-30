@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Register | Smartbudget{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+
+    <div class="auth-card pixel-ui">
+
+        <span class="auth-eyebrow">SMARTBUDGET</span>
+
+        <h2 class="auth-title">Create your account</h2>
+
+        <p class="auth-subtitle">
+            Start tracking your finances intelligently.
+        </p>
+
+        {% if error %}
+            <div class="auth-message error">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST" class="auth-form">
+
+            <div class="input-group">
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Email address"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="auth-btn primary">
+                Create Account
+            </button>
+
+        </form>
+
+        <p class="auth-footer">
+            Already have an account?
+            <a href="{{ url_for('login') }}">Log in</a>
+        </p>
+
+    </div>
+
+</div>
+{% endblock %}
